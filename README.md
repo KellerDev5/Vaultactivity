@@ -3,276 +3,189 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Vault Access Hub</title>
+<title>AI Vault Access Hub</title>
 <style>
-  body {
-    margin: 0;
-    background: radial-gradient(circle at center, #020202 0%, #000 100%);
-    color: #00ffcc;
-    font-family: 'Orbitron', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+  body{
+    margin:0;
+    background:radial-gradient(circle at center,#020202 0%,#000 100%);
+    color:#00ffcc;
+    font-family:'Orbitron',sans-serif;
+    display:flex;flex-direction:column;align-items:center;
+    min-height:100vh;
   }
-
-  h1 {
-    margin-top: 1.5rem;
-    font-size: 2rem;
-    letter-spacing: 2px;
-    text-shadow: 0 0 15px #00ffee;
-    text-transform: uppercase;
-  }
-
-  /* Vault Hub Layout */
-  .hub {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin: 3rem 1rem 2rem;
-  }
-
-  .vault-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .vault-label {
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-  }
-
-  .vault {
-    width: 250px; height: 250px;
-    border-radius: 50%;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    transform-style: preserve-3d;
-  }
-
-  /* ----- Vault 1 ----- */
-  .vault1 {
-    background: radial-gradient(circle, #0f3, #030);
-    box-shadow: 0 0 25px #00ff8844;
-  }
-  .vault1 .core {
-    width: 60px; height: 60px;
-    background: radial-gradient(circle, #00ff99, #002b1f);
-  }
-
-  /* ----- Vault 2 ----- */
-  .vault2 {
-    background: linear-gradient(145deg, #021b2a, #000814);
-    box-shadow: 0 0 25px #00b7ff66;
-    border-radius: 20px;
-  }
-  .vault2 .core {
-    width: 70px; height: 70px;
-    background: radial-gradient(circle, #00d0ff99, #002a4d);
-  }
-
-  /* ----- Vault 3 ----- */
-  .vault3 {
-    background: linear-gradient(160deg, #332000, #000);
-    box-shadow: 0 0 25px #ffaa0088;
-    border-radius: 50%;
-  }
-  .vault3 .core {
-    width: 70px; height: 70px;
-    background: radial-gradient(circle, #ffb319, #663300);
-  }
-
-  /* Vault Animation */
-  .door {
-    position: absolute;
-    width: 50%; height: 100%;
-    top: 0;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: transform 1.5s ease-in-out;
-    z-index: 2;
-  }
-  .door.left { left: 0; transform-origin: left center; }
-  .door.right { right: 0; transform-origin: right center; }
-
-  .open .door.left { transform: rotateY(-110deg); }
-  .open .door.right { transform: rotateY(110deg); }
-
-  .core {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    box-shadow: 0 0 30px currentColor;
-    animation: spin 5s linear infinite;
-  }
-
-  @keyframes spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-  }
-
-  /* Dataset panels */
-  .dataset {
-    display: none;
-    background: rgba(0,0,0,0.85);
-    border: 1px solid #006b44;
-    padding: 20px;
-    max-width: 800px;
-    color: #ccfff4;
-    line-height: 1.5;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00ffaa55;
-    margin: 2rem;
-  }
-  .dataset.blue { border-color: #0077cc; box-shadow: 0 0 20px #00bfff55; }
-  .dataset.orange { border-color: #ff8800; box-shadow: 0 0 20px #ffaa0044; }
-
-  .dataset h2 {
-    color: #00ffcc;
-    border-bottom: 1px solid #00ffaa33;
-    text-shadow: 0 0 10px #00ffaa;
-  }
-  .dataset.blue h2 { color: #00ccff; border-color: #0077dd55; }
-  .dataset.orange h2 { color: #ffb319; border-color: #ff880055; }
-
-  strong { color: #00ffaa; }
-  .blue strong { color: #80e6ff; }
-  .orange strong { color: #ffd480; }
-
-  /* Return button */
-  .return-btn {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.6rem 1.2rem;
-    color: #00ffcc;
-    border: 1px solid #00ffaa55;
-    background: rgba(0,0,0,0.6);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    text-shadow: 0 0 8px #00ffaa;
-  }
-  .return-btn:hover { color: #000; background: #00ffaa; text-shadow: none; }
-  .dataset.blue .return-btn:hover { background: #00ccff; }
-  .dataset.orange .return-btn:hover { background: #ffaa00; }
-
-  footer {
-    margin: 2rem 0;
-    font-size: 0.8rem;
-    opacity: 0.6;
-  }
+  h1{margin-top:1.5rem;font-size:2rem;letter-spacing:2px;text-shadow:0 0 15px #00ffee;text-transform:uppercase;}
+  .hub{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;margin:3rem 1rem 2rem;}
+  .vault-container{display:flex;flex-direction:column;align-items:center;}
+  .vault-label{margin-top:0.5rem;text-transform:uppercase;font-size:0.9rem;letter-spacing:1px;}
+  .vault{width:250px;height:250px;border-radius:50%;position:relative;cursor:pointer;overflow:hidden;transform-style:preserve-3d;}
+  .vault1{background:radial-gradient(circle,#0f3,#030);box-shadow:0 0 25px #00ff8844;}
+  .vault2{background:linear-gradient(145deg,#021b2a,#000814);box-shadow:0 0 25px #00b7ff66;border-radius:20px;}
+  .vault3{background:linear-gradient(160deg,#332000,#000);box-shadow:0 0 25px #ffaa0088;border-radius:50%;}
+  .core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;animation:spin 5s linear infinite;box-shadow:0 0 30px currentColor;}
+  .vault1 .core{width:60px;height:60px;background:radial-gradient(circle,#00ff99,#002b1f);}
+  .vault2 .core{width:70px;height:70px;background:radial-gradient(circle,#00d0ff99,#002a4d);}
+  .vault3 .core{width:70px;height:70px;background:radial-gradient(circle,#ffb319,#663300);}
+  @keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+  .door{position:absolute;width:50%;height:100%;top:0;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.1);transition:transform 1.5s ease-in-out;z-index:2;}
+  .door.left{left:0;transform-origin:left center;}
+  .door.right{right:0;transform-origin:right center;}
+  .open .door.left{transform:rotateY(-110deg);}
+  .open .door.right{transform:rotateY(110deg);}
+  .dataset{display:none;background:rgba(0,0,0,0.85);border:1px solid #006b44;padding:20px;max-width:1000px;color:#ccfff4;line-height:1.6;border-radius:10px;box-shadow:0 0 20px #00ffaa55;margin:2rem;}
+  .dataset h2{color:#00ffcc;border-bottom:1px solid #00ffaa33;text-shadow:0 0 10px #00ffaa;}
+  .blue{border-color:#0077cc;box-shadow:0 0 20px #00bfff55;}
+  .blue h2{color:#00ccff;border-color:#0077dd55;}
+  .orange{border-color:#ff8800;box-shadow:0 0 20px #ffaa0044;}
+  .orange h2{color:#ffb319;border-color:#ff880055;}
+  ul{margin-left:1.3rem;margin-top:0.5rem;}
+  li{margin-bottom:0.4rem;}
+  .return-btn{display:inline-block;margin-top:1.5rem;padding:0.6rem 1.2rem;color:#00ffcc;border:1px solid #00ffaa55;background:rgba(0,0,0,0.6);text-transform:uppercase;letter-spacing:1px;border-radius:6px;cursor:pointer;transition:all 0.3s ease;text-shadow:0 0 8px #00ffaa;}
+  .return-btn:hover{color:#000;background:#00ffaa;text-shadow:none;}
+  footer{margin:2rem 0;font-size:0.8rem;opacity:0.6;}
 </style>
 </head>
-
 <body>
-  <h1>AI VAULT ACCESS HUB</h1>
+<h1>AI VAULT ACCESS HUB</h1>
 
-  <!-- ─── VAULT HUB ─── -->
-  <div class="hub" id="hub">
-    <!-- Vault 1 -->
-    <div class="vault-container">
-      <div class="vault vault1" id="vault1">
-        <div class="door left"></div>
-        <div class="door right"></div>
-        <div class="core"></div>
-      </div>
-      <div class="vault-label">Vault 1<br>AI Secure Vault Data</div>
-    </div>
-
-    <!-- Vault 2 -->
-    <div class="vault-container">
-      <div class="vault vault2" id="vault2">
-        <div class="door left"></div>
-        <div class="door right"></div>
-        <div class="core"></div>
-      </div>
-      <div class="vault-label">Vault 2<br>Cascade Intelligence Network</div>
-    </div>
-
-    <!-- Vault 3 -->
-    <div class="vault-container">
-      <div class="vault vault3" id="vault3">
-        <div class="door left"></div>
-        <div class="door right"></div>
-        <div class="core"></div>
-      </div>
-      <div class="vault-label">Vault 3<br>Technology System Options</div>
-    </div>
+<div class="hub" id="hub">
+  <div class="vault-container">
+    <div class="vault vault1" id="vault1"><div class="door left"></div><div class="door right"></div><div class="core"></div></div>
+    <div class="vault-label">Vault 1<br>Privacy & Cybersecurity Intelligence</div>
   </div>
-
-  <!-- ─── DATA SETS ─── -->
-  <div class="dataset" id="data1">
-    <h2>INTELLIGENCE DATA SET — PRIVACY & CYBERSECURITY</h2>
-    <p><strong>Alpha:</strong> IoT‑AI anonymization maintaining transparency.</p>
-    <p><strong>Beta:</strong> Cybersecurity response—adversarial‑attack defenses.</p>
-    <p><strong>Gamma:</strong> Cross‑district smart integration and AI mobility research.</p>
-    <button class="return-btn" data-target="data1">Return to Vault Hub</button>
+  <div class="vault-container">
+    <div class="vault vault2" id="vault2"><div class="door left"></div><div class="door right"></div><div class="core"></div></div>
+    <div class="vault-label">Vault 2<br>Cascade Intelligence Network</div>
   </div>
-
-  <div class="dataset blue" id="data2">
-    <h2>TECHNOLOGY STAKEHOLDER CRISIS PROPAGATION</h2>
-    <p><strong>Node A:</strong> CRITICAL — emergency bias review, CV discrimination detected.</p>
-    <p><strong>Node B:</strong> SEVERE — transparency protests, NLP/chatbot bias issues.</p>
-    <p><strong>Node C:</strong> HIGH — AI liability reviews, data reliability loss.</p>
-    <p><strong>Node D:</strong> MODERATE — coordination paused pending audits.</p>
-    <p><strong>Challenge:</strong> Trace how bias cascaded through IoT and governance failures.</p>
-    <button class="return-btn" data-target="data2">Return to Vault Hub</button>
+  <div class="vault-container">
+    <div class="vault vault3" id="vault3"><div class="door left"></div><div class="door right"></div><div class="core"></div></div>
+    <div class="vault-label">Vault 3<br>Stakeholder System Options</div>
   </div>
+</div>
 
-  <div class="dataset orange" id="data3">
-    <h2>TECHNOLOGY SYSTEM OPTIONS FOR DISASTER PREDICTION</h2>
-    <p><strong>Innovation Quarter Stack:</strong> ML traffic optimization + IoT sensors, computer‑vision surveillance, deep‑learning NLP systems.</p>
-    <p><strong>Heritage District Stack:</strong> Vision‑based tourism analytics, ML classification of visitor behavior, RPA for site management.</p>
-    <p><strong>Green Valley Stack:</strong> Deep‑learning medical systems, RL‑driven sensors, IoT air‑quality predictions.</p>
-    <h3>Crisis Type Predictions</h3>
-    <p><strong>1. Technical Collapse:</strong> Model degradation → CV overload → NLP misinformation.</p>
-    <p><strong>2. Digital Governance Breakdown:</strong> Bias → intervention → privacy revolt → discrimination leaks.</p>
-    <p><strong>3. Cross‑System Cascade:</strong> Interlinked AI faults, RPA errors, and mis‑optimized RL systems.</p>
-    <p><strong>Disaster Prediction Challenge:</strong><br>
-       “Director, identify failure pathways from bias and IoT vulnerabilities to systemic disaster.”</p>
-    <button class="return-btn" data-target="data3">Return to Vault Hub</button>
-  </div>
+<!-- ─── Vault 1 ─── -->
+<div class="dataset" id="data1">
+  <h2>VAULT 1 – URBANTOPIA PRIVACY AND CYBERSECURITY INTELLIGENCE</h2>
 
-  <footer>© 2025 AI Vault Access Hub</footer>
+  <h3>Intelligence Dataset Alpha – Privacy Protection Systems</h3>
+  <ul>
+    <li><strong>Innovation Quarter:</strong> Advanced anonymization protocols; k‑anonymity standards implemented.</li>
+    <li><strong>Heritage District:</strong> Privacy‑enhancing technologies for tourism data; metadata aggregation prevents identification.</li>
+    <li><strong>Green Valley:</strong> Comprehensive purging systems; synthetic data protects health monitoring.</li>
+  </ul>
+  <p><strong>Status:</strong> 100% compliance, zero complaints, full transparency across CityOS platforms.</p>
+
+  <h3>Intelligence Dataset Beta – Cybersecurity Threat Response</h3>
+  <ul>
+    <li><strong>Alert:</strong> Man‑in‑the‑Middle attack targeting mobility platforms city‑wide.</li>
+    <li><strong>Impact:</strong> Traffic systems compromised; false delay reports sent to apps.</li>
+    <li><strong>Response:</strong> Public‑private teams activated with 24 ⁄ 7 monitoring.</li>
+    <li><strong>Threat Level:</strong> Severe – comparable to Atlanta incident.</li>
+  </ul>
+  <p><strong>Immediate Actions:</strong> Workforce activation, cyber exercises, continuity plans.</p>
+
+  <h3>Intelligence Dataset Gamma – Cross‑District Data Integration</h3>
+  <ul>
+    <li><strong>Universities Partnership:</strong> Collaborative data collection across districts.</li>
+    <li><strong>Funding Sustainability:</strong> Multi‑year contracts secure operations.</li>
+    <li><strong>Technology Development:</strong> Start‑up accelerators build solutions for urban data use.</li>
+    <li><strong>Staff Capacity:</strong> Infrastructure and personnel adequate.</li>
+  </ul>
+  <p><strong>Result:</strong> Improved collaboration and innovation city‑wide.</p>
+
+  <button class="return-btn" data-target="data1">Return to Vault Hub</button>
+</div>
+
+<!-- ─── Vault 2 ─── -->
+<div class="dataset blue" id="data2">
+  <h2>VAULT 2 – CASCADE INTELLIGENCE NETWORK DISPLAY</h2>
+  <h3>Stakeholder Ecosystem Crisis Propagation</h3>
+  <p>Showing how data governance failures cascade through multi‑sector partnerships.</p>
+
+  <h4>Node A – Citizen Privacy Coalition (⚠ Critical)</h4>
+  <ul>
+    <li>Status: Emergency protests demanding platform shutdown.</li>
+    <li>Communication: Opt‑in rates fell 20 → 3%; citizens feel deceived; digital resistance rising.</li>
+  </ul>
+
+  <h4>Node B – Private Sector Consortium (Severe)</h4>
+  <ul>
+    <li>Status: Legal review of contract termination clauses.</li>
+    <li>Communication: Governance failures violate agreements; vendors face reputational risk; integrations suspended pending audit.</li>
+  </ul>
+
+  <h4>Node C – University Research Partners (High)</h4>
+  <ul>
+    <li>Status: Academic collaborations frozen pending ethics review.</li>
+    <li>Communication: Data integrity compromised; ethics boards demand investigation; student projects terminated.</li>
+  </ul>
+
+  <h4>Node D – Municipal Agency Network (Moderate)</h4>
+  <ul>
+    <li>Status: Protocols under emergency review.</li>
+    <li>Communication: 30 agencies implement data isolation; await governance clarity before sharing.</li>
+  </ul>
+
+  <button class="return-btn" data-target="data2">Return to Vault Hub</button>
+</div>
+
+<!-- ─── Vault 3 ─── -->
+<div class="dataset orange" id="data3">
+  <h2>VAULT 3 – STAKEHOLDER SYSTEM OPTIONS FOR DISASTER PREDICTION</h2>
+
+  <h3>Innovation Quarter Stakeholder Network</h3>
+  <ul>
+    <li>Advanced university research with startup incubators for data sharing.</li>
+    <li>Private tech collaboration in citizen behavior analytics.</li>
+    <li>Municipal agency coordination for innovation district services.</li>
+  </ul>
+
+  <h3>Heritage District Stakeholder Network</h3>
+  <ul>
+    <li>Tourism industry data collection partnerships.</li>
+    <li>Cultural preservation society collaborations on heritage monitoring.</li>
+    <li>Municipal tourism coordination with private venues.</li>
+  </ul>
+
+  <h3>Green Valley Stakeholder Network</h3>
+  <ul>
+    <li>Healthcare partnerships for citizen health monitoring.</li>
+    <li>Environmental research with community programs.</li>
+    <li>Municipal health coordination with private wellness providers.</li>
+  </ul>
+
+  <h3>Crisis Type Prediction Options</h3>
+  <ul>
+    <li><strong>Citizen Trust Collapse:</strong> Opt‑in falloff, resistance movements, privacy advocacy pressure.</li>
+    <li><strong>Private Sector Partnership Breakdown:</strong> Contract terminations, liability concerns, withdrawals.</li>
+    <li><strong>Academic Collaboration Termination:</strong> Ethics suspensions, data integrity issues, activism.</li>
+    <li><strong>Municipal Agency Coordination Failure:</strong> Data‑sharing breakdowns, protocol conflicts, jurisdiction disputes.</li>
+  </ul>
+
+  <button class="return-btn" data-target="data3">Return to Vault Hub</button>
+</div>
+
+<footer>© 2025 AI Vault Access Hub</footer>
 
 <script>
-  const vaults = [
-    { el: document.getElementById('vault1'), data: document.getElementById('data1') },
-    { el: document.getElementById('vault2'), data: document.getElementById('data2') },
-    { el: document.getElementById('vault3'), data: document.getElementById('data3') }
-  ];
-  const hub = document.getElementById('hub');
-
-  // Open vault
-  vaults.forEach(({el, data}) => {
-    el.addEventListener('click', () => {
-      el.classList.add('open');
-      setTimeout(() => {
-        hub.style.display = 'none';
-        data.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 2000);
-    });
+const vaults=[
+  {el:document.getElementById('vault1'),data:document.getElementById('data1')},
+  {el:document.getElementById('vault2'),data:document.getElementById('data2')},
+  {el:document.getElementById('vault3'),data:document.getElementById('data3')}
+];
+const hub=document.getElementById('hub');
+vaults.forEach(({el,data})=>{
+  el.addEventListener('click',()=>{
+    el.classList.add('open');
+    setTimeout(()=>{hub.style.display='none';data.style.display='block';window.scrollTo({top:0,behavior:'smooth'});},2000);
   });
-
-  // Return buttons
-  document.querySelectorAll('.return-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const panel = document.getElementById(btn.dataset.target);
-      panel.style.display = 'none';
-      hub.style.display = 'flex';
-      vaults.forEach(({el}) => el.classList.remove('open'));
-    });
+});
+document.querySelectorAll('.return-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.getElementById(btn.dataset.target).style.display='none';
+    hub.style.display='flex';
+    vaults.forEach(({el})=>el.classList.remove('open'));
   });
+});
 </script>
 </body>
 </html>
